@@ -4,11 +4,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,13 +25,15 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 		View rootView=inflater.inflate(R.layout.fragment_calendar, container,false);
 		Button btn_previous=(Button)rootView.findViewById(R.id.btn_calendar_previous);
 		Button btn_next=(Button)rootView.findViewById(R.id.btn_calendar_next);
+		Button btn_add=(Button)rootView.findViewById(R.id.btn_calendar_add);
+		btn_add.setOnClickListener(this);
 		btn_previous.setOnClickListener(this);
 		btn_next.setOnClickListener(this);
+		
 		ListView lv=(ListView)rootView.findViewById(R.id.lv_calendar);
 		mAdapter=new CalendarAdapter(getActivity(), null);
 		lv.setAdapter(mAdapter);
 		CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
-		registerForContextMenu(lv);
 		return rootView;
 	}
 	
@@ -47,20 +45,6 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 		}
 	};
 	
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		return super.onContextItemSelected(item);
-	}
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		menu.setHeaderTitle("action calendar item");
-		menu.add(0, 1, Menu.NONE, "delete");
-		menu.add(0,2,Menu.NONE,"update a add");
-		menu.add(0,3,Menu.NONE,"update b add");
-		menu.add(0, 4, Menu.NONE, "add item zzz");
-		super.onCreateContextMenu(menu, v, menuInfo);
-	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -75,6 +59,9 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 				mCurrentWeek++;
 				CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
 			}
+			break;
+		case R.id.btn_calendar_add:
+			
 			break;
 		default:
 			break;

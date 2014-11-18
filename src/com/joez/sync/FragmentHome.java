@@ -1,17 +1,12 @@
 package com.joez.sync;
 
 
-import com.joez.callback.ViewCallback;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -31,36 +26,15 @@ public class FragmentHome extends Fragment implements OnClickListener{
 		View rootView=inflater.inflate(R.layout.fragment_home, container,false);
 		Button btn_previous=(Button)rootView.findViewById(R.id.btn_home_previous);
 		Button btn_next=(Button)rootView.findViewById(R.id.btn_home_next);
+		Button btn_add=(Button)rootView.findViewById(R.id.btn_home_add);
 		btn_previous.setOnClickListener(this);
 		btn_next.setOnClickListener(this);
+		btn_add.setOnClickListener(this);
 		mLv=(ListView)rootView.findViewById(R.id.lv_home);
-		mAdapter=new HomeAdapter(mHandler, getActivity(),mViewCallback);
+		mAdapter=new HomeAdapter(mHandler, getActivity());
 		mLv.setAdapter(mAdapter);
 		mAdapter.updateFeeds(mCurrentWeek);
 		return rootView;
-	}
-	
-	public ViewCallback mViewCallback=new ViewCallback() {
-		
-		@Override
-		public void registMenu(View view) {
-			FragmentHome.this.registerForContextMenu(view);
-		}
-	};
-	
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		return super.onContextItemSelected(item);
-	}
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		menu.setHeaderTitle("action calendar item");
-		menu.add(0, 1, Menu.NONE, "delete");
-		menu.add(0,2,Menu.NONE,"update a add");
-		menu.add(0,3,Menu.NONE,"update b add");
-		menu.add(0, 4, Menu.NONE, "add item zzz");
-		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 	
 	@Override
@@ -77,6 +51,8 @@ public class FragmentHome extends Fragment implements OnClickListener{
 				mCurrentWeek++;
 				mAdapter.updateFeeds(mCurrentWeek);
 			}
+			break;
+		case R.id.btn_home_add:
 			break;
 		default:
 			break;
