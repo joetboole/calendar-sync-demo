@@ -29,7 +29,7 @@ public class FragmentCalendar extends Fragment implements OnClickListener,Observ
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		CalendarDataSource.getInstance().addObserver(this);
+		CalendarDataResolver.getInstance().addObserver(this);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +54,7 @@ public class FragmentCalendar extends Fragment implements OnClickListener,Observ
 				
 			}
 		});
-		CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+		CalendarDataResolver.getInstance().fetchData(mCurrentWeek, mDataCallback);
 		return rootView;
 	}
 	
@@ -73,13 +73,13 @@ public class FragmentCalendar extends Fragment implements OnClickListener,Observ
 		case R.id.btn_calendar_previous:
 			if(mCurrentWeek>4){
 				mCurrentWeek--;
-				CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+				CalendarDataResolver.getInstance().fetchData(mCurrentWeek, mDataCallback);
 			}
 			break;
 		case R.id.btn_calendar_next:
 			if(mCurrentWeek<42){
 				mCurrentWeek++;
-				CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+				CalendarDataResolver.getInstance().fetchData(mCurrentWeek, mDataCallback);
 			}
 			break;
 		case R.id.btn_calendar_add:
@@ -93,13 +93,13 @@ public class FragmentCalendar extends Fragment implements OnClickListener,Observ
 	public void update(Observable observable, Object data) {
 		int week=(Integer)data;
 		if(week==mCurrentWeek){
-			CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+			CalendarDataResolver.getInstance().fetchData(mCurrentWeek, mDataCallback);
 		}
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		CalendarDataSource.getInstance().deleteObserver(this);
+		CalendarDataResolver.getInstance().deleteObserver(this);
 	}
 }

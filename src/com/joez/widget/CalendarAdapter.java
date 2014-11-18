@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.joez.sync.CalendarDataSource;
+import com.joez.sync.CalendarDataResolver;
 import com.joez.sync.Model;
 import com.joez.sync.R;
 
@@ -70,7 +70,7 @@ public class CalendarAdapter extends BaseAdapter {
 			@Override
 			public boolean onLongClick(View v) {
 				mList.remove(position);
-				CalendarDataSource.getInstance().updateItem(mWeek);
+				CalendarDataResolver.getInstance().updateItem(mWeek);
 				return false;
 			}
 		});

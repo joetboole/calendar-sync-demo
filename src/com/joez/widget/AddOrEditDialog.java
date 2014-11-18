@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.joez.sync.CalendarDataSource;
+import com.joez.sync.CalendarDataResolver;
 import com.joez.sync.Model;
 import com.joez.sync.R;
 
@@ -60,7 +60,7 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 					if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(description)){
 						//add on week
 						Model model=new Model(mWeek, name, description);
-						CalendarDataSource.getInstance().addItem(mWeek, model);
+						CalendarDataResolver.getInstance().addItem(mWeek, model);
 					}
 				}else{
 					//update on week
@@ -68,7 +68,7 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 						//add on week
 						mModel.setName(name);
 						mModel.setDescription(description);
-						CalendarDataSource.getInstance().updateItem(mWeek);
+						CalendarDataResolver.getInstance().updateItem(mWeek);
 					}
 				}
 				dismiss();

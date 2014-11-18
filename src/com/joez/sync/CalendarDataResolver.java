@@ -10,15 +10,15 @@ import com.joez.callback.DataCallback;
 import android.util.Log;
 import android.util.SparseArray;
 
-public class CalendarDataSource extends Observable{
-	private static CalendarDataSource mCalendarDataSource;
+public class CalendarDataResolver extends Observable{
+	private static CalendarDataResolver mCalendarDataSource;
 	private SparseArray<List<Model>> mDataMap=new SparseArray<List<Model>>();
-	private CalendarDataSource() {
+	private CalendarDataResolver() {
 		initData();
 	}
-	public static CalendarDataSource getInstance(){
+	public static CalendarDataResolver getInstance(){
 		if(mCalendarDataSource==null){
-			mCalendarDataSource=new CalendarDataSource();
+			mCalendarDataSource=new CalendarDataResolver();
 		}
 		return mCalendarDataSource;
 	}

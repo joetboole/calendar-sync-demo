@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.joez.callback.DataCallback;
-import com.joez.sync.CalendarDataSource;
+import com.joez.sync.CalendarDataResolver;
 import com.joez.sync.Model;
 import com.joez.sync.R;
 import com.joez.sync.R.id;
@@ -100,8 +100,8 @@ public class HomeAdapter extends BaseAdapter {
 			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
 			mAdapter=new CalendarAdapter(context, null);
 			mlvCurrentCalendar.setAdapter(mAdapter);
-			CalendarDataSource.getInstance().addObserver(this);
-			CalendarDataSource.getInstance().fetchData(week, mDataCallback);
+			CalendarDataResolver.getInstance().addObserver(this);
+			CalendarDataResolver.getInstance().fetchData(week, mDataCallback);
 		}
 		public View getView(int position, View convertView, ViewGroup parent){
 			return mBlistView;
@@ -144,7 +144,7 @@ public class HomeAdapter extends BaseAdapter {
 		public void update(Observable observable, Object data) {
 			int week=(Integer)data;
 			if(week==mWeek){
-				CalendarDataSource.getInstance().fetchData(mWeek, mDataCallback);
+				CalendarDataResolver.getInstance().fetchData(mWeek, mDataCallback);
 			}
 		}
 
