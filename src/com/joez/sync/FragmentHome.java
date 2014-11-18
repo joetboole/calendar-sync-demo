@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.joez.calendarsyncdemo.R;
+import com.joez.sync.R;
 
 public class FragmentHome extends Fragment {
 	private CalendarAdapter mAdapter;

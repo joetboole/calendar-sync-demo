@@ -1,8 +1,7 @@
 package com.joez.sync;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.joez.calendarsyncdemo.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +14,11 @@ public class CalendarAdapter extends BaseAdapter {
 	private List<Model> mList;
 	private LayoutInflater mInflater;
 	public CalendarAdapter(Context context,List<Model> list) {
-		mList=list;
+		if(list==null){
+			mList=new ArrayList<Model>();
+		}else{
+			mList=list;
+		}
 		mInflater=LayoutInflater.from(context);
 	}
 	@Override

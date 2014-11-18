@@ -5,6 +5,10 @@ public class Model {
 	private String description;
 	public Model() {
 	}
+	public Model(int week,String name,String description){
+		this.name=week+name;
+		this.description=week+description;
+	}
 	public String getName() {
 		return name;
 	}

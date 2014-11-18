@@ -1,9 +1,8 @@
 package com.joez.sync;
 
-import com.joez.calendarsyncdemo.R;
+import com.joez.sync.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 public class MainActivity extends FragmentActivity {
