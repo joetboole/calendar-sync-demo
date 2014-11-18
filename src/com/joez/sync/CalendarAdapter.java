@@ -21,6 +21,13 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 		mInflater=LayoutInflater.from(context);
 	}
+	
+	public void updatedata(List<Model> list){
+		if(list!=null)
+			mList=list;
+		notifyDataSetChanged();
+	}
+	
 	@Override
 	public int getCount() {
 		return mList.size();
