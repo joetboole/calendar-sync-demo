@@ -4,7 +4,11 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -31,6 +35,7 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 		mAdapter=new CalendarAdapter(getActivity(), null);
 		lv.setAdapter(mAdapter);
 		CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+		registerForContextMenu(lv);
 		return rootView;
 	}
 	
@@ -41,6 +46,21 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 			mAdapter.updatedata(listData);
 		}
 	};
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		return super.onContextItemSelected(item);
+	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		menu.setHeaderTitle("action calendar item");
+		menu.add(0, 1, Menu.NONE, "delete");
+		menu.add(0,2,Menu.NONE,"update a add");
+		menu.add(0,3,Menu.NONE,"update b add");
+		menu.add(0, 4, Menu.NONE, "add item zzz");
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

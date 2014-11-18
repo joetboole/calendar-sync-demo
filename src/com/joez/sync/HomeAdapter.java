@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.joez.callback.DataCallback;
+import com.joez.callback.ViewCallback;
 
 public class HomeAdapter extends BaseAdapter {
 	private List<Model> mListFeeds;
@@ -23,6 +24,7 @@ public class HomeAdapter extends BaseAdapter {
 	private Blist mCurrentBlist;
 	private Context mContext;
 	private Handler mHandler;
+	private ViewCallback mViewCallback;
 	static{
 		mAllFeeds=new SparseArray<List<Model>>();
 		List<Model> listWeek=null;
@@ -34,13 +36,14 @@ public class HomeAdapter extends BaseAdapter {
 			mAllFeeds.put(week, listWeek);
 		}
 	}
-	public HomeAdapter(Handler handler,Context context) {
+	public HomeAdapter(Handler handler,Context context,ViewCallback viewCallback) {
 		mInflater=LayoutInflater.from(context);
 		mContext=context;
 		mHandler=handler;
 		if(mListFeeds==null){
 			mListFeeds=new ArrayList<Model>();
 		}
+		mViewCallback=viewCallback;
 	}
 	
 	public void updateFeeds(int week){
@@ -91,6 +94,7 @@ public class HomeAdapter extends BaseAdapter {
 			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
 			mAdapter=new CalendarAdapter(context, null);
 			mlvCurrentCalendar.setAdapter(mAdapter);
+			mViewCallback.registMenu(mlvCurrentCalendar);
 			CalendarDataSource.getInstance().fetchData(week, mDataCallback);
 		}
 		public View getView(int position, View convertView, ViewGroup parent){

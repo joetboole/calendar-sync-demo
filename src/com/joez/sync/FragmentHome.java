@@ -1,11 +1,17 @@
 package com.joez.sync;
 
 
+import com.joez.callback.ViewCallback;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,10 +34,33 @@ public class FragmentHome extends Fragment implements OnClickListener{
 		btn_previous.setOnClickListener(this);
 		btn_next.setOnClickListener(this);
 		mLv=(ListView)rootView.findViewById(R.id.lv_home);
-		mAdapter=new HomeAdapter(mHandler, getActivity());
+		mAdapter=new HomeAdapter(mHandler, getActivity(),mViewCallback);
 		mLv.setAdapter(mAdapter);
 		mAdapter.updateFeeds(mCurrentWeek);
 		return rootView;
+	}
+	
+	public ViewCallback mViewCallback=new ViewCallback() {
+		
+		@Override
+		public void registMenu(View view) {
+			FragmentHome.this.registerForContextMenu(view);
+		}
+	};
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		return super.onContextItemSelected(item);
+	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		menu.setHeaderTitle("action calendar item");
+		menu.add(0, 1, Menu.NONE, "delete");
+		menu.add(0,2,Menu.NONE,"update a add");
+		menu.add(0,3,Menu.NONE,"update b add");
+		menu.add(0, 4, Menu.NONE, "add item zzz");
+		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 	
 	@Override
