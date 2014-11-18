@@ -3,21 +3,22 @@ package com.joez.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.joez.sync.Model;
-import com.joez.sync.R;
-import com.joez.sync.R.id;
-import com.joez.sync.R.layout;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.joez.sync.CalendarDataSource;
+import com.joez.sync.Model;
+import com.joez.sync.R;
+
 public class CalendarAdapter extends BaseAdapter {
 	private List<Model> mList;
 	private LayoutInflater mInflater;
+	private int mWeek;
 	public CalendarAdapter(Context context,List<Model> list) {
 		if(list==null){
 			mList=new ArrayList<Model>();
@@ -27,9 +28,11 @@ public class CalendarAdapter extends BaseAdapter {
 		mInflater=LayoutInflater.from(context);
 	}
 	
-	public void updatedata(List<Model> list){
-		if(list!=null)
+	public void updatedata(List<Model> list,int week){
+		if(list!=null){
+			mWeek=week;
 			mList=list;
+		}
 		notifyDataSetChanged();
 	}
 	
@@ -49,7 +52,7 @@ public class CalendarAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder=null;
 		if(convertView==null){
 			viewHolder=new ViewHolder();
@@ -62,6 +65,15 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 		viewHolder.tv_name.setText(mList.get(position).getName());
 		viewHolder.tv_description.setText(mList.get(position).getDescription());
+		viewHolder.tv_description.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				mList.remove(position);
+				CalendarDataSource.getInstance().updateItem(mWeek);
+				return false;
+			}
+		});
 		return convertView;
 	}
 

@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.joez.sync.CalendarDataSource;
 import com.joez.sync.Model;
 import com.joez.sync.R;
 
@@ -36,6 +38,12 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 		setContentView(R.layout.addoredititem);
 		mEtName=(EditText)findViewById(R.id.et_name);
 		mEtDescription=(EditText)findViewById(R.id.et_description);
+		
+		if(mModel!=null){
+			mEtName.setText(mModel.getName());
+			mEtDescription.setText(mModel.getDescription());
+		}
+		
 		Button btnDone=(Button)findViewById(R.id.btn_done);
 		Button btnCancel=(Button)findViewById(R.id.btn_cancel);
 		btnDone.setOnClickListener(this);
@@ -49,7 +57,19 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 				String name=mEtName.getText().toString();
 				String description=mEtDescription.getText().toString();
 				if(mModel==null){
-					
+					if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(description)){
+						//add on week
+						Model model=new Model(mWeek, name, description);
+						CalendarDataSource.getInstance().addItem(mWeek, model);
+					}
+				}else{
+					//update on week
+					if(!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(description)){
+						//add on week
+						mModel.setName(name);
+						mModel.setDescription(description);
+						CalendarDataSource.getInstance().updateItem(mWeek);
+					}
 				}
 				dismiss();
 				break;

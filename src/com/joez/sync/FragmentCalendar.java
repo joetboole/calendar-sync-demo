@@ -1,7 +1,10 @@
 package com.joez.sync;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,10 +20,16 @@ import com.joez.callback.DataCallback;
 import com.joez.sync.R;
 import com.joez.widget.CalendarAdapter;
 
-public class FragmentCalendar extends Fragment implements OnClickListener{
+public class FragmentCalendar extends Fragment implements OnClickListener,Observer{
 	private CalendarAdapter mAdapter;
 	private int mCurrentWeek=38;
+	private List<Model> mList;
 	public FragmentCalendar() {
+	}
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		CalendarDataSource.getInstance().addObserver(this);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +50,7 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				((MainActivity)getActivity()).addOrEditItem(mCurrentWeek);
+				((MainActivity)getActivity()).addOrEditItem(mCurrentWeek,mList.get(position));
 				
 			}
 		});
@@ -53,7 +62,8 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 		
 		@Override
 		public void dataCallback(List<Model> listData) {
-			mAdapter.updatedata(listData);
+			mList=listData;
+			mAdapter.updatedata(listData,mCurrentWeek);
 		}
 	};
 	
@@ -73,12 +83,23 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 			}
 			break;
 		case R.id.btn_calendar_add:
-			
+			((MainActivity)getActivity()).addOrEditItem(mCurrentWeek,null);
 			break;
 		default:
 			break;
 		}
-		
+	}
+	@Override
+	public void update(Observable observable, Object data) {
+		int week=(Integer)data;
+		if(week==mCurrentWeek){
+			CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+		}
 	}
 
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		CalendarDataSource.getInstance().deleteObserver(this);
+	}
 }

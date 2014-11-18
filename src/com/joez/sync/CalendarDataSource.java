@@ -3,12 +3,14 @@ package com.joez.sync;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import com.joez.callback.DataCallback;
 
+import android.util.Log;
 import android.util.SparseArray;
 
-public class CalendarDataSource {
+public class CalendarDataSource extends Observable{
 	private static CalendarDataSource mCalendarDataSource;
 	private SparseArray<List<Model>> mDataMap=new SparseArray<List<Model>>();
 	private CalendarDataSource() {
@@ -30,6 +32,23 @@ public class CalendarDataSource {
 			mDataMap.put(week, listWeek);
 		}
 	}
+	
+	public void addItem(int week,Model model){
+		List<Model> list=mDataMap.get(week);
+		Log.e("debug", "additem@@@"+mDataMap.get(week).size());
+		if(list!=null){
+			list.add(model);
+			Log.e("debug", "additem@@@"+mDataMap.get(week).size());
+			setChanged();
+			notifyObservers(week);
+		}
+	}
+	
+	public void updateItem(int week){
+		setChanged();
+		notifyObservers(week);
+	}
+	
 	public void fetchData(int weekIndex,DataCallback dataCallback){
 		//fetch data
 		List<Model> list=mDataMap.get(weekIndex);

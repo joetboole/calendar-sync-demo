@@ -2,6 +2,8 @@ package com.joez.widget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import android.content.Context;
 import android.os.Handler;
@@ -87,15 +89,18 @@ public class HomeAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
-	public class Blist extends Model{
+	public class Blist extends Model implements Observer{
 		private ListView mlvCurrentCalendar;
 		private CalendarAdapter mAdapter;
 		private View mBlistView;
+		private int mWeek;
 		public Blist(Context context,int week) {
+			mWeek=week;
 			mBlistView=mInflater.inflate(R.layout.blistcarditem, null, false);
 			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
 			mAdapter=new CalendarAdapter(context, null);
 			mlvCurrentCalendar.setAdapter(mAdapter);
+			CalendarDataSource.getInstance().addObserver(this);
 			CalendarDataSource.getInstance().fetchData(week, mDataCallback);
 		}
 		public View getView(int position, View convertView, ViewGroup parent){
@@ -105,7 +110,7 @@ public class HomeAdapter extends BaseAdapter {
 			
 			@Override
 			public void dataCallback(List<Model> listData) {
-				mAdapter.updatedata(listData);
+				mAdapter.updatedata(listData,mWeek);
 				mHandler.postDelayed(new Runnable() {
 					
 					@Override
@@ -134,6 +139,13 @@ public class HomeAdapter extends BaseAdapter {
 			params.height = totalHeight
 					+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 			listView.setLayoutParams(params);
+		}
+		@Override
+		public void update(Observable observable, Object data) {
+			int week=(Integer)data;
+			if(week==mWeek){
+				CalendarDataSource.getInstance().fetchData(mWeek, mDataCallback);
+			}
 		}
 
 	}
