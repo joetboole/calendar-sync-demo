@@ -18,18 +18,16 @@ import com.joez.sync.R;
 public class AddOrEditDialog extends Dialog implements OnClickListener{
 	
 	private Context mContext;
-	private OnDialogCallback mCallback;
 	private EditText mEtName,mEtDescription;
 	private Model mModel;
 	private int mWeek;
 
-	public AddOrEditDialog(Activity activity,OnDialogCallback callback,Model model,int week) {
+	public AddOrEditDialog(Activity activity,Model model,int week) {
 		super(activity);
 		mWeek=week;
 		mModel=model;
 		mContext = activity;
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-		mCallback=callback;
 	}
 	
 	@Override
@@ -79,22 +77,12 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 			default:
 				break;
 		}
-	
-	}
-	
-	private void dialogDismiss(){
-		this.dismiss();
 	}
 	
 	@Override
 	public void onBackPressed() {
-		mCallback.onCancel();
+		dismiss();
 		super.onBackPressed();
 	}
-	
-	public interface OnDialogCallback { 
-        public void onCancel(); 
-        public void onDone();
-	} 
 	
 }

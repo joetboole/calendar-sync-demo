@@ -34,20 +34,4 @@ public class MainActivity extends FragmentActivity {
 		}
 		dialog.show();
 	}
-	
-	private OnDialogCallback mCallback=new OnDialogCallback() {
-		
-		@Override
-		public void onDone() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onCancel() {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-	
 }
