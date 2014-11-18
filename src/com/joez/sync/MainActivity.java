@@ -2,7 +2,6 @@ package com.joez.sync;
 
 import com.joez.sync.R;
 import com.joez.widget.AddOrEditDialog;
-import com.joez.widget.AddOrEditDialog.OnDialogCallback;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +25,7 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	public void addOrEditItem(int week,Model updateModel){
-		AddOrEditDialog dialog=new AddOrEditDialog(this, mCallback,updateModel,week);
+		AddOrEditDialog dialog=new AddOrEditDialog(this,updateModel,week);
 		if(updateModel==null){
 			dialog.setTitle(String.format("update week %d",week));
 		}else{

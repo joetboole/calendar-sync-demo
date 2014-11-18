@@ -20,8 +20,6 @@ import com.joez.callback.DataCallback;
 import com.joez.sync.CalendarDataResolver;
 import com.joez.sync.Model;
 import com.joez.sync.R;
-import com.joez.sync.R.id;
-import com.joez.sync.R.layout;
 
 public class HomeAdapter extends BaseAdapter {
 	private List<Model> mListFeeds;

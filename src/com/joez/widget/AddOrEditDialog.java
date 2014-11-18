@@ -2,7 +2,6 @@ package com.joez.widget;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.joez.sync.R;
 
 public class AddOrEditDialog extends Dialog implements OnClickListener{
 	
-	private Context mContext;
 	private EditText mEtName,mEtDescription;
 	private Model mModel;
 	private int mWeek;
@@ -26,7 +24,6 @@ public class AddOrEditDialog extends Dialog implements OnClickListener{
 		super(activity);
 		mWeek=week;
 		mModel=model;
-		mContext = activity;
 		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 	}
 	

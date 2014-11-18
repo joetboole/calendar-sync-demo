@@ -7,7 +7,6 @@ import java.util.Observable;
 
 import com.joez.callback.DataCallback;
 
-import android.util.Log;
 import android.util.SparseArray;
 
 public class CalendarDataResolver extends Observable{
@@ -35,10 +34,8 @@ public class CalendarDataResolver extends Observable{
 	
 	public void addItem(int week,Model model){
 		List<Model> list=mDataMap.get(week);
-		Log.e("debug", "additem@@@"+mDataMap.get(week).size());
 		if(list!=null){
 			list.add(model);
-			Log.e("debug", "additem@@@"+mDataMap.get(week).size());
 			setChanged();
 			notifyObservers(week);
 		}
