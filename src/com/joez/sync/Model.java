@@ -7,7 +7,7 @@ public class Model {
 	}
 	public Model(int week,String name,String description){
 		this.name=week+name;
-		this.description=week+description;
+		this.description=description;
 	}
 	public String getName() {
 		return name;
