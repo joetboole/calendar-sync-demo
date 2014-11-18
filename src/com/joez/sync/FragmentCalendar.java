@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.joez.callback.DataCallback;
 import com.joez.sync.R;
 import com.joez.widget.CalendarAdapter;
+import com.joez.widget.Model;
 
 public class FragmentCalendar extends Fragment implements OnClickListener,Observer{
 	private CalendarAdapter mAdapter;

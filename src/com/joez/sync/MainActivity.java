@@ -2,6 +2,7 @@ package com.joez.sync;
 
 import com.joez.sync.R;
 import com.joez.widget.AddOrEditDialog;
+import com.joez.widget.Model;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

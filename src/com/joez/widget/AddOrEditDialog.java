@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.joez.sync.CalendarDataResolver;
-import com.joez.sync.Model;
 import com.joez.sync.R;
 
 public class AddOrEditDialog extends Dialog implements OnClickListener{

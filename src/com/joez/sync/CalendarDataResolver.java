@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import com.joez.callback.DataCallback;
+import com.joez.widget.Model;
 
 import android.util.SparseArray;
 

@@ -1,4 +1,4 @@
-package com.joez.sync;
+package com.joez.widget;
 
 public class Model {
 	private String name;
