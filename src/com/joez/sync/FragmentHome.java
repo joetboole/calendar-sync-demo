@@ -2,6 +2,8 @@ package com.joez.sync;
 
 
 
+import com.joez.widget.HomeAdapter;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;

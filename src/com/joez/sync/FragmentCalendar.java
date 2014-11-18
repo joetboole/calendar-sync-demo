@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.joez.callback.DataCallback;
 import com.joez.sync.R;
+import com.joez.widget.CalendarAdapter;
 
 public class FragmentCalendar extends Fragment implements OnClickListener{
 	private CalendarAdapter mAdapter;
@@ -33,6 +36,15 @@ public class FragmentCalendar extends Fragment implements OnClickListener{
 		ListView lv=(ListView)rootView.findViewById(R.id.lv_calendar);
 		mAdapter=new CalendarAdapter(getActivity(), null);
 		lv.setAdapter(mAdapter);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				((MainActivity)getActivity()).addOrEditItem(mCurrentWeek);
+				
+			}
+		});
 		CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
 		return rootView;
 	}

@@ -1,14 +1,11 @@
 package com.joez.sync;
 
 import com.joez.sync.R;
+import com.joez.widget.AddOrEditDialog;
+import com.joez.widget.AddOrEditDialog.OnDialogCallback;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 
 public class MainActivity extends FragmentActivity {
 	
@@ -27,5 +24,30 @@ public class MainActivity extends FragmentActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+	
+	public void addOrEditItem(int week,Model updateModel){
+		AddOrEditDialog dialog=new AddOrEditDialog(this, mCallback,updateModel,week);
+		if(updateModel==null){
+			dialog.setTitle(String.format("update week %d",week));
+		}else{
+			dialog.setTitle(String.format("add week %d",week));
+		}
+		dialog.show();
+	}
+	
+	private OnDialogCallback mCallback=new OnDialogCallback() {
+		
+		@Override
+		public void onDone() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 	
 }

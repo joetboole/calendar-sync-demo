@@ -1,7 +1,12 @@
-package com.joez.sync;
+package com.joez.widget;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.joez.sync.Model;
+import com.joez.sync.R;
+import com.joez.sync.R.id;
+import com.joez.sync.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.joez.sync;
+package com.joez.widget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.joez.callback.DataCallback;
-import com.joez.callback.ViewCallback;
+import com.joez.sync.CalendarDataSource;
+import com.joez.sync.Model;
+import com.joez.sync.R;
+import com.joez.sync.R.id;
+import com.joez.sync.R.layout;
 
 public class HomeAdapter extends BaseAdapter {
 	private List<Model> mListFeeds;
