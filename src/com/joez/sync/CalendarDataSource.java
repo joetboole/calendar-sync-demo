@@ -24,7 +24,7 @@ public class CalendarDataSource {
 		List<Model> listWeek=null;
 		for(int week=4;week<=42;week++){
 			listWeek=new ArrayList<Model>();
-			for(int i=0;i<20;i++){
+			for(int i=0;i<7;i++){
 				listWeek.add(new Model(week,"name"+i,"desciption"+i));
 			}
 			mDataMap.put(week, listWeek);

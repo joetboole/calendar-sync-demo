@@ -1,8 +1,8 @@
 package com.joez.sync;
 
-import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.joez.callback.DataCallback;
 
 public class FragmentHome extends Fragment implements OnClickListener{
-	private CalendarAdapter mAdapter;
+	private HomeAdapter mAdapter;
 	private ListView mLv;
 	private int mCurrentWeek=40;
+	private Handler mHandler=new Handler();
 	public FragmentHome() {
 	}
 	@Override
@@ -28,32 +28,25 @@ public class FragmentHome extends Fragment implements OnClickListener{
 		btn_previous.setOnClickListener(this);
 		btn_next.setOnClickListener(this);
 		mLv=(ListView)rootView.findViewById(R.id.lv_home);
-		mAdapter=new CalendarAdapter(getActivity(), null);
+		mAdapter=new HomeAdapter(mHandler, getActivity());
 		mLv.setAdapter(mAdapter);
-		CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+		mAdapter.updateFeeds(mCurrentWeek);
 		return rootView;
 	}
 	
-	private DataCallback mDataCallback=new DataCallback() {
-		
-		@Override
-		public void dataCallback(List<Model> listData) {
-			mAdapter.updatedata(listData);
-		}
-	};
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_home_previous:
 			if(mCurrentWeek>4){
 				mCurrentWeek--;
-				CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+				mAdapter.updateFeeds(mCurrentWeek);
 			}
 			break;
 		case R.id.btn_home_next:
 			if(mCurrentWeek<42){
 				mCurrentWeek++;
-				CalendarDataSource.getInstance().fetchData(mCurrentWeek, mDataCallback);
+				mAdapter.updateFeeds(mCurrentWeek);
 			}
 			break;
 		default:
