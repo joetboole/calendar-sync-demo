@@ -50,6 +50,9 @@ public class HomeAdapter extends BaseAdapter {
 	
 	public void updateFeeds(int week){
 		mListFeeds=mAllFeeds.get(week);
+		if(mCurrentBlist!=null){
+			CalendarDataResolver.getInstance().deleteObserver(mCurrentBlist);
+		}
 		mCurrentBlist=new Blist(mContext, week);
 		notifyDataSetChanged();
 	}
@@ -97,10 +100,11 @@ public class HomeAdapter extends BaseAdapter {
 			mWeek=week;
 			mAdapter=new CalendarAdapter(context, null);
 			CalendarDataResolver.getInstance().addObserver(this);
-		}
-		public View getView(int position, View convertView, ViewGroup parent){
 			mBlistView=(LinearLayout)mInflater.inflate(R.layout.blistcarditem, null, false);
 			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
+		}
+		public View getView(int position, View convertView, ViewGroup parent){
+			
 			
 			mlvCurrentCalendar.setAdapter(mAdapter);
 		
@@ -124,7 +128,7 @@ public class HomeAdapter extends BaseAdapter {
 					public void run() {
 						setListViewHeightBasedOnChildren(mlvCurrentCalendar);
 					}
-				}, 600);
+				}, 300);
 			}
 		};
 		
