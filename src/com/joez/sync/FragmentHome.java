@@ -5,13 +5,10 @@ package com.joez.sync;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -37,15 +34,6 @@ public class FragmentHome extends Fragment implements OnClickListener{
 		btn_add.setOnClickListener(this);
 		
 		mLv=(ListView)rootView.findViewById(R.id.lv_home);
-		mLv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Log.e("debug", "home@@@itemclick");
-				
-			}
-		});
 		mAdapter=new HomeAdapter(mHandler, getActivity());
 		mLv.setAdapter(mAdapter);
 		mAdapter.updateFeeds(mCurrentWeek);
