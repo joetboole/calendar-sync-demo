@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class HomeAdapter extends BaseAdapter {
 		List<Model> listWeek=null;
 		for(int week=4;week<=42;week++){
 			listWeek=new ArrayList<Model>();
-			for(int i=0;i<4;i++){
+			for(int i=0;i<8;i++){
 				listWeek.add(new Model(week,"other card"," of feeds"+i));
 			}
 			mAllFeeds.put(week, listWeek);
@@ -89,24 +90,33 @@ public class HomeAdapter extends BaseAdapter {
 	public class Blist extends Model implements Observer{
 		private ListView mlvCurrentCalendar;
 		private CalendarAdapter mAdapter;
-		private View mBlistView;
+		private LinearLayout mBlistView;
 		private int mWeek;
+		private List<Model> mList;
 		public Blist(Context context,int week) {
 			mWeek=week;
-			mBlistView=mInflater.inflate(R.layout.blistcarditem, null, false);
-			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
 			mAdapter=new CalendarAdapter(context, null);
-			mlvCurrentCalendar.setAdapter(mAdapter);
 			CalendarDataResolver.getInstance().addObserver(this);
-			CalendarDataResolver.getInstance().fetchData(week, mDataCallback);
 		}
 		public View getView(int position, View convertView, ViewGroup parent){
+			mBlistView=(LinearLayout)mInflater.inflate(R.layout.blistcarditem, null, false);
+			mlvCurrentCalendar=(ListView)mBlistView.findViewById(R.id.lv_home_blist);
+			
+			mlvCurrentCalendar.setAdapter(mAdapter);
+		
+			CalendarDataResolver.getInstance().fetchData(mWeek, mDataCallback);
 			return mBlistView;
 		}
+		
+		public List<Model> getList(){
+			return mList;
+		}
+		
 		private DataCallback mDataCallback=new DataCallback() {
 			
 			@Override
 			public void dataCallback(List<Model> listData) {
+				mList=listData;
 				mAdapter.updatedata(listData,mWeek);
 				mHandler.postDelayed(new Runnable() {
 					
@@ -114,7 +124,7 @@ public class HomeAdapter extends BaseAdapter {
 					public void run() {
 						setListViewHeightBasedOnChildren(mlvCurrentCalendar);
 					}
-				}, 400);
+				}, 600);
 			}
 		};
 		
@@ -142,6 +152,7 @@ public class HomeAdapter extends BaseAdapter {
 			int week=(Integer)data;
 			if(week==mWeek){
 				CalendarDataResolver.getInstance().fetchData(mWeek, mDataCallback);
+				HomeAdapter.this.notifyDataSetChanged();
 			}
 		}
 

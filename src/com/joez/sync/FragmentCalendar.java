@@ -46,15 +46,15 @@ public class FragmentCalendar extends Fragment implements OnClickListener,Observ
 		ListView lv=(ListView)rootView.findViewById(R.id.lv_calendar);
 		mAdapter=new CalendarAdapter(getActivity(), null);
 		lv.setAdapter(mAdapter);
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				((MainActivity)getActivity()).addOrEditItem(mCurrentWeek,mList.get(position));
-				
-			}
-		});
+//		lv.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				((MainActivity)getActivity()).addOrEditItem(mCurrentWeek,mList.get(position));
+//				
+//			}
+//		});
 		CalendarDataResolver.getInstance().fetchData(mCurrentWeek, mDataCallback);
 		return rootView;
 	}

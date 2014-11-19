@@ -12,13 +12,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.joez.sync.CalendarDataResolver;
+import com.joez.sync.MainActivity;
 import com.joez.sync.R;
 
 public class CalendarAdapter extends BaseAdapter {
 	private List<Model> mList;
 	private LayoutInflater mInflater;
 	private int mWeek;
+	private Context mContext;
 	public CalendarAdapter(Context context,List<Model> list) {
+		mContext=context;
 		if(list==null){
 			mList=new ArrayList<Model>();
 		}else{
@@ -63,6 +66,15 @@ public class CalendarAdapter extends BaseAdapter {
 			viewHolder=(ViewHolder) convertView.getTag();
 		}
 		viewHolder.tv_name.setText(mList.get(position).getName());
+		viewHolder.tv_name.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				((MainActivity)mContext).addOrEditItem(mWeek,mList.get(position));
+				CalendarDataResolver.getInstance().updateItem(mWeek);
+				return true;
+			}
+		});
 		viewHolder.tv_description.setText(mList.get(position).getDescription());
 		viewHolder.tv_description.setOnLongClickListener(new OnLongClickListener() {
 			
@@ -70,7 +82,7 @@ public class CalendarAdapter extends BaseAdapter {
 			public boolean onLongClick(View v) {
 				mList.remove(position);
 				CalendarDataResolver.getInstance().updateItem(mWeek);
-				return false;
+				return true;
 			}
 		});
 		return convertView;

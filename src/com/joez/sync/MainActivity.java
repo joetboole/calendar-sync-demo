@@ -15,16 +15,6 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-	
 	public void addOrEditItem(int week,Model updateModel){
 		AddOrEditDialog dialog=new AddOrEditDialog(this,updateModel,week);
 		if(updateModel==null){
