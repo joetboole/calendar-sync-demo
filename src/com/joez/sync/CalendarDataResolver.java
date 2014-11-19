@@ -52,6 +52,9 @@ public class CalendarDataResolver extends Observable{
 		List<Model> list=mDataMap.get(weekIndex);
 		if(list==null){
 			//fetch from net ..
+			//..task 
+			//..note
+			mDataMap.put(weekIndex, list);
 			dataCallback.dataCallback(list);
 		}else{
 			dataCallback.dataCallback(list);
